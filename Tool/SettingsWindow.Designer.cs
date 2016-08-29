@@ -41,6 +41,7 @@
             this.numUpDnMapWidth = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnNewMap = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDnTileSize)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -222,11 +223,23 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Width:";
             // 
+            // btnNewMap
+            // 
+            this.btnNewMap.Location = new System.Drawing.Point(97, 192);
+            this.btnNewMap.Name = "btnNewMap";
+            this.btnNewMap.Size = new System.Drawing.Size(99, 30);
+            this.btnNewMap.TabIndex = 2;
+            this.btnNewMap.Text = "Create New Map";
+            this.btnNewMap.UseVisualStyleBackColor = true;
+            this.btnNewMap.Visible = false;
+            this.btnNewMap.Click += new System.EventHandler(this.btnNewMap_Click);
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(214, 234);
+            this.Controls.Add(this.btnNewMap);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -261,5 +274,6 @@
         private System.Windows.Forms.NumericUpDown numUpDnMapWidth;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnNewMap;
     }
 }

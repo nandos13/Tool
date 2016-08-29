@@ -20,6 +20,9 @@ namespace Tool
         public SettingsWindow()
         {
             InitializeComponent();
+
+            groupBox2.Hide();
+            btnNewMap.Show();
         }
 
         private void btnBrowseTileset_Click(object sender, EventArgs e)
@@ -81,7 +84,9 @@ namespace Tool
             if (numUpDnMapHeight.Value >= _mainWindow._map.Height
                 && numUpDnMapWidth.Value >= _mainWindow._map.Width)      //  Neither dimension will cut any data off the map
             {
-
+                _mainWindow.regenMap(_mainWindow._map.Width, _mainWindow._map.Height, (uint)numUpDnMapWidth.Value, (uint)numUpDnMapHeight.Value);
+                _mainWindow._map.Width = (uint)numUpDnMapWidth.Value;
+                _mainWindow._map.Height = (uint)numUpDnMapHeight.Value;
             }
             else
             {
@@ -92,7 +97,7 @@ namespace Tool
                 if (MessageBox.Show(message, "Caution", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
                     == DialogResult.Yes)
                 {
-                    //TODO
+                    _mainWindow.regenMap(_mainWindow._map.Width, _mainWindow._map.Height, (uint)numUpDnMapWidth.Value, (uint)numUpDnMapHeight.Value);
                     _mainWindow._map.Height = (uint)numUpDnMapHeight.Value;
                     _mainWindow._map.Width = (uint)numUpDnMapWidth.Value;
 
@@ -103,6 +108,17 @@ namespace Tool
                 }
 
             }
+        }
+
+        private void btnNewMap_Click(object sender, EventArgs e)
+        {
+            _mainWindow.showNewMapDialog();
+        }
+
+        public void showMapOptions()
+        {
+            groupBox2.Show();
+            btnNewMap.Hide();
         }
     }
 }

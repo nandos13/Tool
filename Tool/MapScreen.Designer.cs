@@ -33,6 +33,7 @@
             // 
             // panelTiles
             // 
+            this.panelTiles.AutoScroll = true;
             this.panelTiles.AutoSize = true;
             this.panelTiles.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelTiles.Dock = System.Windows.Forms.DockStyle.Fill;

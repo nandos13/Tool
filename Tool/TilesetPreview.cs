@@ -20,7 +20,7 @@ namespace Tool
         private uint tilesX = 0;
         private uint tilesY = 0;
 
-        private Point currentSelectedTile = new Point(-50, -50);
+        private Point currentSelectedTile = new Point(0, 0);
 
 
         public TilesetPreview()
@@ -56,6 +56,7 @@ namespace Tool
                         for (uint j = 0; j < tilesY; j++)
                         {
 
+                            //  Get the region of each tile within the tileset
                             Rectangle tileArea = new Rectangle((int)(i*cSize), (int)(j*cSize), (int)(cSize), (int)(cSize));
                             Bitmap tile = (Bitmap)temp.Clone(tileArea, temp.PixelFormat);
 
@@ -64,7 +65,9 @@ namespace Tool
                         }
 
                     }
-                    
+
+                    _mainWindow._currentTile = _mainWindow._loadedTiles[0, 0];
+
                 }
 
             }

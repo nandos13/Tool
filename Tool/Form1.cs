@@ -54,8 +54,8 @@ namespace Tool
             /* Create new map 10x10 */
 
             _map.CellSize = 1;
-            _map.Width = 10;
-            _map.Height = 10;
+            _map.Width = 1;
+            _map.Height = 1;
             window_settings.updateNUDValues();
         }
 
@@ -127,10 +127,33 @@ namespace Tool
             closeAllWindows();
         }
 
+        public void showNewMapDialog()
+        {
+            /* Allows the user to create a new map, as long as a tileset has first been chosen */
+
+            if (_tilesetImage == null)
+            {
+                //  Prompt user to select a tileset first
+                String message = "Please provide a Tileset before creating a new map";
+                MessageBox.Show(message, "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+            else
+            {
+                //  Show dialog for new map
+                window_new.updateNUDValues();
+                window_new.ShowDialog();
+            }
+            
+        }
+
+        public void settingsShowMapOptions()
+        {
+            window_settings.showMapOptions();
+        }
+
         private void newMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            window_new.updateNUDValues();
-            window_new.ShowDialog();
+            showNewMapDialog();
         }
 
         public void updateNUDValues()
@@ -141,6 +164,12 @@ namespace Tool
         public void generateMap()
         {
             window_mapEditor.generateMap();
+        }
+
+        public void regenMap(uint w, uint h, uint nW, uint nH)
+        {
+            _map.regenMap(w, h, nW, nH);
+            window_mapEditor.regenMap(w, h, nW, nH);
         }
     }
 }

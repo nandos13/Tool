@@ -35,6 +35,8 @@ namespace Tool
 
             _mainWindow.updateNUDValues();
 
+            _mainWindow.settingsShowMapOptions();
+
             Hide();
         }
 

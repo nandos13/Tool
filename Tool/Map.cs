@@ -10,8 +10,8 @@ namespace Tool
     {
         /* Private variables */
 
-        private uint _width = 10;       // number of cells in x axis
-        private uint _height = 10;      // number of cells in y axis
+        private uint _width = 0;       // number of cells in x axis
+        private uint _height = 0;      // number of cells in y axis
         private uint _cellSize;         // width & height of cells (pixels)
 
         MapTile[,] _tiles = new MapTile[10, 10];
@@ -28,13 +28,13 @@ namespace Tool
         public uint Width
         {
             get { return _width; }
-            set { regenMap(_width, _height, value, _height);  _width = value; }
+            set { /*regenMap(_width, _height, value, _height);*/  _width = value; }
         }
 
         public uint Height
         {
             get { return _height; }
-            set { regenMap(_width, _height, _width, value);  _height = value; }
+            set { /*regenMap(_width, _height, _width, value);*/  _height = value; }
         }
 
         public uint CellSize
@@ -48,14 +48,15 @@ namespace Tool
             _tiles[x, y] = data;
         }
 
-        private void regenMap(uint w, uint h, uint nW, uint nH)
+        public void regenMap(uint w, uint h, uint nW, uint nH)
         {
             /* Regenerates the array of MapTiles when the map size is modified 
              * w = width, h = height, nW = new width, nH = new height */
 
             MapTile[,] temp = new MapTile[nW, nH];
 
-            for(uint i = 0; i < w; i++)
+            //  Loop through all elements in old grid and apply to new grid
+            for (uint i = 0; i < w; i++)
             {
                 
                 for(uint j = 0; j < h; j++)
@@ -63,12 +64,22 @@ namespace Tool
 
                     if (i < nW && j < nH)
                     {
-
                         //  Copy over data from old map
                         temp[i, j] = _tiles[i, j];
-
                     }
-                    else
+
+                }
+
+            }
+
+            //  Loop through all elements in new grid and initialize any null elements
+            for (uint i = 0; i < nW; i++)
+            {
+
+                for (uint j = 0; j < nH; j++)
+                {
+
+                    if (temp[i, j] == null)
                     {
                         //  Set to new tile
                         temp[i, j] = new MapTile();
