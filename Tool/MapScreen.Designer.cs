@@ -40,7 +40,6 @@
             this.panelTiles.Name = "panelTiles";
             this.panelTiles.Size = new System.Drawing.Size(746, 668);
             this.panelTiles.TabIndex = 2;
-            this.panelTiles.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTiles_Paint);
             this.panelTiles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelTiles_MouseClick);
             // 
             // MapScreen

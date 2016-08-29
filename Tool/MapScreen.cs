@@ -19,8 +19,6 @@ namespace Tool
         /* Member Variables */
         PictureBox[,] _grid;
 
-        private Point currentSelectedTile = new Point(-50, -50);
-
         public MapScreen()
         {
             InitializeComponent();
@@ -35,10 +33,6 @@ namespace Tool
         public void generateMap()
         {
             _grid = new PictureBox[(_mainWindow._map.Width), (_mainWindow._map.Height)];
-        }
-
-        private void panelTiles_Paint(object sender, PaintEventArgs e)
-        {
 
             for (uint i = 0; i < _mainWindow._map.Width; i++)
             {
@@ -46,27 +40,29 @@ namespace Tool
                 for (uint j = 0; j < _mainWindow._map.Height; j++)
                 {
 
+                    _grid[i, j] = new PictureBox();
                     _grid[i, j].Parent = panelTiles;
-
-                    if (_mainWindow._map.tile(i, j) != null)
-                    {
-                        _grid[i, j].Image = _mainWindow._map.tile(i, j).Image;
-                    }
-                    else
-                    {
-                        _grid[i, j].Image = SystemIcons.Error.ToBitmap();
-                    }
-
-                    _grid[i, j].Left = (int)(i * _mainWindow.MapCellSize);
-                    _grid[i, j].Top = (int)(j * _mainWindow.MapCellSize);
+                    _grid[i, j].Left = (int)(i * 32);
+                    _grid[i, j].Top = (int)(j * 32);
                     _grid[i, j].Width = 32;
                     _grid[i, j].Height = 32;
+
+                    _grid[i, j].SizeMode = PictureBoxSizeMode.StretchImage;
                     _grid[i, j].Visible = true;
+
+                    _grid[i, j].Image = _mainWindow._currentTile.Image;
+
+                    _grid[i, j].MouseClick += changeImage;
 
                 }
 
             }
+        }
 
+        private void changeImage(object sender, MouseEventArgs e)
+        {            
+            PictureBox pbox = sender as PictureBox;
+            pbox.Image = _mainWindow._currentTile.Image; //  Sets the clicked tile to the currently selected sprite
         }
 
         private void panelTiles_MouseClick(object sender, MouseEventArgs e)
@@ -80,9 +76,9 @@ namespace Tool
                 uint x = (uint)e.X / cSize;
                 uint y = (uint)e.Y / cSize;
 
-                currentSelectedTile = new Point((int)x, (int)y);
+                _grid[x, y].Image = _mainWindow._currentTile.Image; //  Sets the clicked tile to the currently selected sprite
 
-                panelTiles.Invalidate(); //  This will call the paint function and display a box around the selected tile
+                _grid[x, y].Invalidate(); //  This will call the paint function and display a box around the selected tile
 
             }
         }

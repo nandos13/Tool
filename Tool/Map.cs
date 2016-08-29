@@ -64,8 +64,14 @@ namespace Tool
                     if (i < nW && j < nH)
                     {
 
+                        //  Copy over data from old map
                         temp[i, j] = _tiles[i, j];
 
+                    }
+                    else
+                    {
+                        //  Set to new tile
+                        temp[i, j] = new MapTile();
                     }
 
                 }
@@ -88,7 +94,5 @@ namespace Tool
         {
             return _tiles[x, y];
         }
-
-        //
     }
 }
