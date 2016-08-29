@@ -54,15 +54,40 @@ namespace Tool
 
                     _grid[i, j].MouseClick += changeImage;
 
+                    _mainWindow._map.setTile(i, j, _mainWindow._currentTile);
+
                 }
 
             }
         }
 
         private void changeImage(object sender, MouseEventArgs e)
-        {            
+        {
             PictureBox pbox = sender as PictureBox;
-            pbox.Image = _mainWindow._currentTile.Image; //  Sets the clicked tile to the currently selected sprite
+
+            if (e.Button == MouseButtons.Left)
+            {
+                /* Left Click: Set the clicked tile to the currently selected sprite */
+                
+                pbox.Image = _mainWindow._currentTile.Image;
+
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                /* Right Click: Set the current sprite to that of the clicked tile.
+                 * This acts similar to the "eye drop" tool in other applications */
+
+                uint x = 0, y = 0;
+                MapTile temp = _mainWindow.findTile(pbox.Image, ref x, ref y);
+
+                if (temp != null)
+                {
+                    _mainWindow._currentTile = temp;
+                    _mainWindow.settingsSetHilitedTile(x, y);
+                }
+
+            }
+            
         }
 
         private void panelTiles_MouseClick(object sender, MouseEventArgs e)

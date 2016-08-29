@@ -28,13 +28,13 @@ namespace Tool
         public uint Width
         {
             get { return _width; }
-            set { /*regenMap(_width, _height, value, _height);*/  _width = value; }
+            set { _width = value; }
         }
 
         public uint Height
         {
             get { return _height; }
-            set { /*regenMap(_width, _height, _width, value);*/  _height = value; }
+            set { _height = value; }
         }
 
         public uint CellSize

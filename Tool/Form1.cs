@@ -82,6 +82,57 @@ namespace Tool
             window_tileset.UpdateImage();
         }
 
+        public MapTile findTile(Image img)
+        {
+            /* Iterates through all loaded tiles and returns the first tile found with
+             * an image matching the input parameter */
+
+            MapTile match = null;
+
+            for (uint i = 0; i < _map.Width; i++)
+            {
+                for (uint j = 0; j < _map.Height; j++)
+                {
+                    if (_loadedTiles[i, j].Image == img)
+                    {
+                        //  Found match
+                        match = _loadedTiles[i, j];
+                        break;
+                    }
+                }
+                if (match != null)
+                    break;
+            }
+            return match;
+        }
+
+        public MapTile findTile(Image img, ref uint x, ref uint y)
+        {
+            /* Iterates through all loaded tiles and returns the first tile found with
+             * an image matching the input parameter.
+             * Will also set two reference parameters to the index of the tile in the array */
+
+            MapTile match = null;
+
+            for (uint i = 0; i < _map.Width; i++)
+            {
+                for (uint j = 0; j < _map.Height; j++)
+                {
+                    if (_loadedTiles[i, j].Image == img)
+                    {
+                        //  Found match
+                        match = _loadedTiles[i, j];
+                        x = i;
+                        y = j;
+                        break;
+                    }
+                }
+                if (match != null)
+                    break;
+            }
+            return match;
+        }
+
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             window_settings.Show();
@@ -149,6 +200,11 @@ namespace Tool
         public void settingsShowMapOptions()
         {
             window_settings.showMapOptions();
+        }
+
+        public void settingsSetHilitedTile(uint x, uint y)
+        {
+            window_tileset.setHilitedTile(x, y);
         }
 
         private void newMapToolStripMenuItem_Click(object sender, EventArgs e)

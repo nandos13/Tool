@@ -101,6 +101,12 @@ namespace Tool
 
         }
 
+        public void setHilitedTile(uint x, uint y)
+        {
+            currentSelectedTile = new Point((int)x, (int)y);
+            picBoxTileset.Invalidate();
+        }
+
         private void picBoxTileset_Paint(object sender, PaintEventArgs e)
         {
             /* Draws a rectangle around the selected tile */
