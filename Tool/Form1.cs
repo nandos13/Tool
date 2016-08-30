@@ -274,5 +274,21 @@ namespace Tool
             _map.serialize();
 
         }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            /* Deserialization: Input an xml file and deserialize to load a map */
+
+            _map.deserialize();
+            _map.reloadTextures(_loadedTiles);
+
+            //  Refresh display in map editor window
+            window_mapEditor.refreshMap();
+
+            //  Allow settings window to edit dimensions
+            window_settings.showDimensionEditor();
+            updateNUDValues();
+
+        }
     }
 }

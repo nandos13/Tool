@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Xml.Serialization;
 
 namespace Tool
 {
@@ -27,9 +28,11 @@ namespace Tool
             _tileTexture = t;
         }
 
+        [XmlIgnore]
         public Bitmap Image
         {
             get { return _tileTexture; }
+            set { _tileTexture = value; }
         }
 
         public int TileOffsetX

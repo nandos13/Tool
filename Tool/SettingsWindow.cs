@@ -21,8 +21,19 @@ namespace Tool
         {
             InitializeComponent();
 
+            hideDimensionEditor();
+        }
+
+        public void hideDimensionEditor()
+        {
             groupBox2.Hide();
             btnNewMap.Show();
+        }
+
+        public void showDimensionEditor()
+        {
+            groupBox2.Show();
+            btnNewMap.Hide();
         }
 
         private void btnBrowseTileset_Click(object sender, EventArgs e)
@@ -117,8 +128,7 @@ namespace Tool
 
         public void showMapOptions()
         {
-            groupBox2.Show();
-            btnNewMap.Hide();
+            showDimensionEditor();
         }
     }
 }

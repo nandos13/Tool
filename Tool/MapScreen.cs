@@ -30,7 +30,7 @@ namespace Tool
             Hide();
         }
 
-        public void generateMap()
+        public void clearGrid()
         {
             /* Remove all tiles from the screen */
 
@@ -45,7 +45,13 @@ namespace Tool
                     }
                 }
             }
-            
+
+        }
+
+        public void generateMap()
+        {
+
+            clearGrid();
             
             /* Generate new tiles and display them on the screen */
 
@@ -76,6 +82,41 @@ namespace Tool
                 }
 
             }
+        }
+
+        public void refreshMap()
+        {
+
+            clearGrid();
+
+            /* Generate new tiles and display them on the screen */
+
+            _grid = new PictureBox[(_mainWindow._map.Width), (_mainWindow._map.Height)];
+
+            for (uint i = 0; i < _mainWindow._map.Width; i++)
+            {
+
+                for (uint j = 0; j < _mainWindow._map.Height; j++)
+                {
+
+                    _grid[i, j] = new PictureBox();
+                    _grid[i, j].Parent = panelTiles;
+                    _grid[i, j].Left = (int)(i * 32);
+                    _grid[i, j].Top = (int)(j * 32);
+                    _grid[i, j].Width = 32;
+                    _grid[i, j].Height = 32;
+
+                    _grid[i, j].SizeMode = PictureBoxSizeMode.StretchImage;
+                    _grid[i, j].Visible = true;
+
+                    _grid[i, j].Image = _mainWindow._map.tile(i, j).Image;
+
+                    _grid[i, j].MouseClick += changeImage;
+
+                }
+
+            }
+
         }
 
         private void changeImage(object sender, MouseEventArgs e)

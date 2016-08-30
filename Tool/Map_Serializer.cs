@@ -52,13 +52,54 @@ namespace Tool
             {
                 /* Serialize and save file */
 
-                XmlSerializer xS = new XmlSerializer(typeof(Map));
+                XmlSerializer xS = new XmlSerializer(typeof(Map_Serializer));
                 StreamWriter sW = new StreamWriter(fDialog.FileName);
 
                 xS.Serialize(sW, this);
                 sW.Close();
 
             }
+        }
+
+        public void deserialize(ref Map map)
+        {
+            /* XML Deserialization */
+
+            OpenFileDialog fDialog = new OpenFileDialog();
+
+            fDialog.Filter = "*.xml|*.xml";
+            fDialog.FilterIndex = 1;
+            fDialog.RestoreDirectory = true;
+
+            if (fDialog.ShowDialog() == DialogResult.OK)
+            {
+                /* Open file and deserialize */
+
+                XmlSerializer xS = new XmlSerializer(typeof(Map_Serializer));
+                StreamReader sR = new StreamReader(fDialog.FileName);
+
+                Map_Serializer tempSerializer = xS.Deserialize(sR) as Map_Serializer;
+
+                sR.Close();
+
+
+                /* Convert Map_Serializer to Map class instance */
+
+                Map tempMap = new Map(tempSerializer._width, tempSerializer._height, tempSerializer._cellSize);
+                tempMap.newMap();
+
+                for (uint i = 0; i < tempSerializer._tiles.GetLength(0); i++)
+                {
+                    for (uint j = 0; j < tempSerializer._tiles[i].Length; j++)
+                    {
+                        tempMap.setTile(i, j, tempSerializer._tiles[i][j]);
+                    }
+                }
+
+                map = tempMap;
+
+            }
+
         }
     }
 }
