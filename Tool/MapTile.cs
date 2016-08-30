@@ -11,7 +11,7 @@ namespace Tool
     {
         /*Private Variables*/
 
-        Bitmap _tileTexture;
+        private Bitmap _tileTexture;
         private int _tileOffsetX;
         private int _tileOffsetY;
 

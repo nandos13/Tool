@@ -114,27 +114,6 @@ namespace Tool
             
         }
 
-        private void panelTiles_MouseClick(object sender, MouseEventArgs e)
-        {
-            /* Calculate which portion of the map was clicked */
-            
-            if(e.X < _mainWindow._map.Width * 32 && e.Y < _mainWindow._map.Height * 32)
-            {
-
-                uint cSize = 32;
-                uint x = (uint)e.X / cSize;
-                uint y = (uint)e.Y / cSize;
-
-                if (_grid != null)
-                {
-                    _grid[x, y].Image = _mainWindow._currentTile.Image; //  Sets the clicked tile to the currently selected sprite
-
-                    _grid[x, y].Invalidate(); //  This will call the paint function and display a box around the selected tile
-                }
-
-            }
-        }
-
         public void regenMap(uint w, uint h, uint nW, uint nH)
         {
             /* Regenerates the map when the map size is modified 

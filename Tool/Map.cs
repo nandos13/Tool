@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System.Windows.Forms;
+using System.IO;
 
 namespace Tool
 {
@@ -11,11 +13,11 @@ namespace Tool
     {
         /* Private variables */
 
-        private uint _width = 0;       // number of cells in x axis
-        private uint _height = 0;      // number of cells in y axis
-        private uint _cellSize;         // width & height of cells (pixels)
+        private uint _width = 0;        // number of cells in x axis
+        private uint _height = 0;       // number of cells in y axis
+        private uint _cellSize = 1;     // width & height of cells (pixels)
 
-        MapTile[,] _tiles = new MapTile[10, 10];
+        MapTile[,] _tiles = new MapTile[0, 0];
 
         /* Constructor */
 
@@ -107,6 +109,31 @@ namespace Tool
         public MapTile tile(uint x, uint y)
         {
             return _tiles[x, y];
+        }
+
+        public void serialize()
+        {
+            /* XML Serialization:
+             * Creates a new instance of Map_Serializer class
+             * and calls the serialize function in the instance */
+
+            MapTile[][] jagArray = new MapTile[_width][];
+
+            for (uint i = 0; i < _tiles.GetLength(0); i++)
+            {
+                jagArray[i] = new MapTile[_tiles.GetLength(1)];
+
+                for (uint j = 0; j < _tiles.GetLength(1); j++)
+                {
+                    jagArray[i][j] = _tiles[i, j];
+                }
+            }
+
+            Map_Serializer serial = new Map_Serializer(_width, _height, _cellSize);
+            serial._tiles = jagArray;
+
+            serial.serialize();
+
         }
     }
 }

@@ -86,19 +86,22 @@ namespace Tool
         {
             /* Calculate which portion of the image was clicked */
 
-            if(e.X < _mainWindow._tilesetImage.Width && e.Y < _mainWindow._tilesetImage.Height)
+            if (_mainWindow._tilesetImage != null)
             {
+                if (e.X < _mainWindow._tilesetImage.Width && e.Y < _mainWindow._tilesetImage.Height)
+                {
 
-                uint cSize = _mainWindow.MapCellSize;
-                uint x = (uint) e.X / cSize;
-                uint y = (uint) e.Y / cSize;
+                    uint cSize = _mainWindow.MapCellSize;
+                    uint x = (uint)e.X / cSize;
+                    uint y = (uint)e.Y / cSize;
 
-                currentSelectedTile = new Point((int)x, (int)y);
+                    currentSelectedTile = new Point((int)x, (int)y);
 
-                _mainWindow._currentTile = _mainWindow._loadedTiles[x, y];
-                
-                picBoxTileset.Invalidate(); //  This will call the paint function and display a box around the selected tile
+                    _mainWindow._currentTile = _mainWindow._loadedTiles[x, y];
 
+                    picBoxTileset.Invalidate(); //  This will call the paint function and display a box around the selected tile
+
+                }
             }
 
         }

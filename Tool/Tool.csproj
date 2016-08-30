@@ -60,6 +60,7 @@
       <DependentUpon>MapScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="MapTile.cs" />
+    <Compile Include="Map_Serializer.cs" />
     <Compile Include="NewMapWindow.cs">
       <SubType>Form</SubType>
     </Compile>

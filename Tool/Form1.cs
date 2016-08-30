@@ -25,7 +25,7 @@ namespace Tool
         /* Member Variables */
 
         public Map _map = new Map(10, 10, 1);
-        public Image _tilesetImage;
+        public Image _tilesetImage = null;
         public MapTile[,] _loadedTiles = new MapTile[0, 0];
         public MapTile _currentTile = null;
 
@@ -52,8 +52,6 @@ namespace Tool
             window_tileset._mainWindow = this;
 
             window_new._mainWindow = this;
-
-            /* Create new map 10x10 */
 
             _map.CellSize = 1;
             _map.Width = 1;
@@ -91,9 +89,9 @@ namespace Tool
 
             MapTile match = null;
 
-            for (uint i = 0; i < _map.Width; i++)
+            for (uint i = 0; i < _loadedTiles.GetLength(0); i++)
             {
-                for (uint j = 0; j < _map.Height; j++)
+                for (uint j = 0; j < _loadedTiles.GetLength(1); j++)
                 {
                     if (_loadedTiles[i, j].Image == img)
                     {
@@ -116,9 +114,9 @@ namespace Tool
 
             MapTile match = null;
 
-            for (uint i = 0; i < _map.Width; i++)
+            for (uint i = 0; i < _loadedTiles.GetLength(0); i++)
             {
-                for (uint j = 0; j < _map.Height; j++)
+                for (uint j = 0; j < _loadedTiles.GetLength(1); j++)
                 {
                     if (_loadedTiles[i, j].Image == img)
                     {
@@ -267,6 +265,14 @@ namespace Tool
             }
 
             
+        }
+
+        private void projectxmlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            /* Serialization: Outputs an xml file of the map */
+
+            _map.serialize();
+
         }
     }
 }
