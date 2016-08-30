@@ -65,12 +65,66 @@ namespace Tool
                         Path.GetExtension(txtTilesetDirectory.Text) == ".png")
                     {
 
-                        _mainWindow._tilesetImage = Image.FromFile(txtTilesetDirectory.Text);
-                        _mainWindow.MapCellSize = (uint)numUpDnTileSize.Value;
-                        _mainWindow.updateTilesetImage();
+                        //  Check for any loss of data
+
+                        MapTile temp = new MapTile();
+                        uint lostData = 0;
+
+                        Image newImage = Image.FromFile(txtTilesetDirectory.Text);
+
+                        if (!(_mainWindow._map.isEmpty()))
+                        {
+                            for (uint i = 0; i < _mainWindow._map.Width; i++)
+                            {
+                                for (uint j = 0; j < _mainWindow._map.Height; j++)
+                                {
+                                    temp = _mainWindow._map.tile(i, j);
+
+                                    if ((uint)(newImage.Width / numUpDnTileSize.Value) <= temp.TileOffsetX || (uint)(newImage.Height / numUpDnTileSize.Value) <= temp.TileOffsetY)
+                                    {
+                                        /* Current map uses tiles out of the range of the currently
+                                         * loaded tileset. Alert the user to this possible loss of data */
+                                        lostData++;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (lostData > 0)
+                        {
+
+                            String message = "The current map uses tiles that fall out of the range of the currently loaded Tileset. These tiles will be reset to the first tile (0, 0) in the current Tileset. \nAre you sure you wish to apply this tileset? \nTiles affected: ";
+                            if (MessageBox.Show(message + lostData.ToString(), "Caution", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                            {
+                                _mainWindow._tilesetImage = newImage;
+                                _mainWindow.MapCellSize = (uint)numUpDnTileSize.Value;
+                                _mainWindow.updateTilesetImage();
+
+                                if (!(_mainWindow._map.isEmpty()))
+                                {
+                                    _mainWindow.refreshMap();
+                                }
+
+                            }
+                            else
+                            {
+                                updateNUDValues();
+                            }
+
+                        }
+                        else
+                        {
+                            _mainWindow._tilesetImage = newImage;
+                            _mainWindow.MapCellSize = (uint)numUpDnTileSize.Value;
+                            _mainWindow.updateTilesetImage();
+
+                            if (!(_mainWindow._map.isEmpty()))
+                            {
+                                _mainWindow.refreshMap();
+                            }
+                        }
 
                     }
-
                     
                 }
                 
@@ -86,8 +140,17 @@ namespace Tool
 
         public void updateNUDValues()
         {
-            numUpDnMapWidth.Value = _mainWindow._map.Width;
-            numUpDnMapHeight.Value = _mainWindow._map.Height;
+            if (!(_mainWindow._map.isEmpty()))
+            {
+                numUpDnMapWidth.Value = _mainWindow._map.Width;
+                numUpDnMapHeight.Value = _mainWindow._map.Height;
+            }
+            else
+            {
+                numUpDnMapWidth.Value = 1;
+                numUpDnMapHeight.Value = 1;
+            }
+            numUpDnTileSize.Value = _mainWindow._map.CellSize;
         }
 
         private void btnApplyDimensions_Click(object sender, EventArgs e)

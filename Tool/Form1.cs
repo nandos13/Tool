@@ -24,7 +24,7 @@ namespace Tool
 
         /* Member Variables */
 
-        public Map _map = new Map(10, 10, 1);
+        public Map _map = new Map(0, 0, 1);
         public Image _tilesetImage = null;
         public MapTile[,] _loadedTiles = new MapTile[0, 0];
         public MapTile _currentTile = null;
@@ -222,6 +222,11 @@ namespace Tool
             window_mapEditor.generateMap();
         }
 
+        public void refreshMap()
+        {
+            window_mapEditor.refreshMap();
+        }
+
         public void regenMap(uint w, uint h, uint nW, uint nH)
         {
             _map.regenMap(w, h, nW, nH, _currentTile);
@@ -232,6 +237,10 @@ namespace Tool
         {
             /* Outputs a png image of the map */
 
+            //if (_map.)
+            {
+
+            }
             SaveFileDialog fDialog = new SaveFileDialog();
 
             fDialog.Filter = "*.png|*.png";
@@ -279,15 +288,36 @@ namespace Tool
         {
             /* Deserialization: Input an xml file and deserialize to load a map */
 
-            _map.deserialize();
-            _map.reloadTextures(_loadedTiles);
+            if (_tilesetImage == null)
+            {
 
-            //  Refresh display in map editor window
-            window_mapEditor.refreshMap();
+                //  Prompt user to select a tileset first
+                String message = "Please provide a Tileset before creating a new map";
+                MessageBox.Show(message, "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
-            //  Allow settings window to edit dimensions
-            window_settings.showDimensionEditor();
-            updateNUDValues();
+            }
+            else
+            {
+
+                bool mapUsesTexturesOutOfRange = false;
+
+                _map.deserialize();
+                _map.reloadTextures(_loadedTiles, ref mapUsesTexturesOutOfRange);
+
+                if (mapUsesTexturesOutOfRange)
+                {
+                    String message = "The loaded map uses tiles that fall out of the range of the currently loaded Tileset. These tiles have been reset to the first tile (0, 0) in the current Tileset. \nTo prevent this loss of data, please choose a tileset with larger dimensions and reload the map.";
+                    MessageBox.Show(message, "Caution", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                //  Refresh display in map editor window
+                window_mapEditor.refreshMap();
+
+                //  Allow settings window to edit dimensions
+                window_settings.showDimensionEditor();
+                updateNUDValues();
+
+            }
 
         }
     }

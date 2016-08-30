@@ -109,9 +109,23 @@ namespace Tool
                     _grid[i, j].SizeMode = PictureBoxSizeMode.StretchImage;
                     _grid[i, j].Visible = true;
 
-                    _grid[i, j].Image = _mainWindow._map.tile(i, j).Image;
-
                     _grid[i, j].MouseClick += changeImage;
+
+                    MapTile temp = _mainWindow._map.tile(i, j);
+
+                    if (_mainWindow._loadedTiles.GetLength(0) <= temp.TileOffsetX || _mainWindow._loadedTiles.GetLength(1) <= temp.TileOffsetY)
+                    {
+                        /* Current map uses tiles out of the range of the currently
+                         * loaded tileset. Alert the user to this possible loss of data */
+
+                        _grid[i, j].Image = _mainWindow._loadedTiles[0, 0].Image;
+                        temp.TileOffsetX = 0;
+                        temp.TileOffsetY = 0;
+                    }
+                    else
+                    {
+                        _grid[i, j].Image = _mainWindow._loadedTiles[temp.TileOffsetX, temp.TileOffsetY].Image;
+                    }
 
                 }
 

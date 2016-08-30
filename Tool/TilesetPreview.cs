@@ -69,6 +69,7 @@ namespace Tool
                     }
 
                     _mainWindow._currentTile = _mainWindow._loadedTiles[0, 0];
+                    GC.Collect();
 
                 }
 
@@ -95,11 +96,17 @@ namespace Tool
                     uint x = (uint)e.X / cSize;
                     uint y = (uint)e.Y / cSize;
 
-                    currentSelectedTile = new Point((int)x, (int)y);
+                    //  Check tile clicked has enough width and height to be a valid tile
+                    if (! ((x + 1) * cSize > _mainWindow._tilesetImage.Width || (y + 1) * cSize > _mainWindow._tilesetImage.Height) )
+                    {
 
-                    _mainWindow._currentTile = _mainWindow._loadedTiles[x, y];
+                        currentSelectedTile = new Point((int)x, (int)y);
 
-                    picBoxTileset.Invalidate(); //  This will call the paint function and display a box around the selected tile
+                        _mainWindow._currentTile = _mainWindow._loadedTiles[x, y];
+
+                        picBoxTileset.Invalidate(); //  This will call the paint function and display a box around the selected tile
+
+                    }
 
                 }
             }

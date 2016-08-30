@@ -86,7 +86,6 @@ namespace Tool
                     if (temp[i, j] == null)
                     {
                         //  Set to new tile
-                        //temp[i, j] = new MapTile();
                         temp[i, j] = nTile;
                     }
 
@@ -109,6 +108,15 @@ namespace Tool
         public MapTile tile(uint x, uint y)
         {
             return _tiles[x, y];
+        }
+
+        public bool isEmpty()
+        {
+            if (_tiles.GetLength(0) == 0 || _tiles.GetLength(1) == 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public void serialize()
@@ -148,26 +156,36 @@ namespace Tool
             serial.deserialize(ref temp);
 
             //  Copy loaded values over to this map
-            _cellSize = temp.CellSize;
+            //_cellSize = temp.CellSize;
             _width = temp.Width;
             _height = temp.Height;
             _tiles = temp._tiles;
             
         }
 
-        public void reloadTextures(MapTile[,] loaded)
+        public void reloadTextures(MapTile[,] loaded, ref bool texturesOutOfRange)
         {
             /* Reloads all textures after a new map has been loaded from a file */
+
+            bool tilesOutOfRange = false;   /* Tracks if the loaded map uses tiles out of 
+                                             * range in the currently loaded sprite sheet */
+
+            MapTile temp = new MapTile();
 
             for (uint i = 0; i < _tiles.GetLength(0); i++)
             {
                 for (uint j = 0; j < _tiles.GetLength(1); j++)
                 {
-                    MapTile temp = _tiles[i, j];
+                    temp = _tiles[i, j];
 
-                    if (loaded.GetLength(0) < temp.TileOffsetX && loaded.GetLength(1) < temp.TileOffsetY)
+                    if (loaded.GetLength(0) <= temp.TileOffsetX || loaded.GetLength(1) <= temp.TileOffsetY)
                     {
+                        /* Loaded map makes use of tiles out of the range of the currently 
+                         * loaded tileset. Reference bool parameter will be set to alert 
+                         * the user to this possible loss of data */
+
                         _tiles[i, j].Image = loaded[0, 0].Image;
+                        tilesOutOfRange = true;
                     }
                     else
                     {
@@ -176,6 +194,8 @@ namespace Tool
 
                 }
             }
+
+            texturesOutOfRange = tilesOutOfRange;
 
         }
     }
