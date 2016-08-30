@@ -32,6 +32,23 @@ namespace Tool
 
         public void generateMap()
         {
+            /* Remove all tiles from the screen */
+
+            if (_grid != null)
+            {
+                for (uint i = 0; i < _grid.GetLength(0); i++)
+                {
+                    for (uint j = 0; j < _grid.GetLength(1); j++)
+                    {
+                        _grid[i, j].Visible = false;
+                        _grid[i, j].Enabled = false;
+                    }
+                }
+            }
+            
+            
+            /* Generate new tiles and display them on the screen */
+
             _grid = new PictureBox[(_mainWindow._map.Width), (_mainWindow._map.Height)];
 
             for (uint i = 0; i < _mainWindow._map.Width; i++)
@@ -70,6 +87,13 @@ namespace Tool
                 /* Left Click: Set the clicked tile to the currently selected sprite */
                 
                 pbox.Image = _mainWindow._currentTile.Image;
+
+                //  Get the index of the tile in the map
+                
+                uint x = (uint)(pbox.Left / pbox.Width);    //  Gets the first-dimension index of the tile
+                uint y = (uint)(pbox.Top / pbox.Height);    //  Gets the second-dimension index of the tile
+
+                _mainWindow._map.setTile(x, y, _mainWindow._currentTile);
 
             }
             else if (e.Button == MouseButtons.Right)

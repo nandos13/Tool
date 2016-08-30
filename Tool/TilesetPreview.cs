@@ -61,6 +61,8 @@ namespace Tool
                             Bitmap tile = (Bitmap)temp.Clone(tileArea, temp.PixelFormat);
 
                             _mainWindow._loadedTiles[i, j] = new MapTile(tile);
+                            _mainWindow._loadedTiles[i, j].TileOffsetX = (int)i;
+                            _mainWindow._loadedTiles[i, j].TileOffsetY = (int)j;
 
                         }
 

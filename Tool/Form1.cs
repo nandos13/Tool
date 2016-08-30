@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace Tool
 {
@@ -224,8 +226,47 @@ namespace Tool
 
         public void regenMap(uint w, uint h, uint nW, uint nH)
         {
-            _map.regenMap(w, h, nW, nH);
+            _map.regenMap(w, h, nW, nH, _currentTile);
             window_mapEditor.regenMap(w, h, nW, nH);
+        }
+
+        private void imageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            /* Outputs a png image of the map */
+
+            SaveFileDialog fDialog = new SaveFileDialog();
+
+            fDialog.Filter = "*.png|*.png";
+            fDialog.FileName = "map.png";
+            fDialog.FilterIndex = 1;
+            fDialog.RestoreDirectory = true;
+
+            if (fDialog.ShowDialog() == DialogResult.OK)
+            {
+                /* Generate and save image */
+
+                uint cSize = _map.CellSize;
+                Bitmap bmp = new Bitmap((int)(_map.Width * cSize), (int)(_map.Height * cSize));
+                PictureBox temp = new PictureBox();
+
+                for (uint i = 0; i < _map.Width; i++)
+                {
+
+                    for (uint j = 0; j < _map.Height; j++)
+                    {
+
+                        temp.Image = _map.tile(i, j).Image;
+                        temp.DrawToBitmap(bmp, new Rectangle((int)(i * cSize), (int)(j * cSize), (int)(cSize), (int)(cSize)));
+
+                    }
+
+                }
+
+                bmp.Save(fDialog.FileName, ImageFormat.Png);
+
+            }
+
+            
         }
     }
 }

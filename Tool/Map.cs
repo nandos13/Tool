@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Tool
 {
@@ -48,10 +49,11 @@ namespace Tool
             _tiles[x, y] = data;
         }
 
-        public void regenMap(uint w, uint h, uint nW, uint nH)
+        public void regenMap(uint w, uint h, uint nW, uint nH, MapTile nTile)
         {
             /* Regenerates the array of MapTiles when the map size is modified 
-             * w = width, h = height, nW = new width, nH = new height */
+             * w = width, h = height, nW = new width, nH = new height 
+             * nTile = new MapTile that will fill all blank spaces */
 
             MapTile[,] temp = new MapTile[nW, nH];
 
@@ -82,7 +84,8 @@ namespace Tool
                     if (temp[i, j] == null)
                     {
                         //  Set to new tile
-                        temp[i, j] = new MapTile();
+                        //temp[i, j] = new MapTile();
+                        temp[i, j] = nTile;
                     }
 
                 }

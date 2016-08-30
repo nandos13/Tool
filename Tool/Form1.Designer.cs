@@ -36,6 +36,10 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tilesetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mapEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectxmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectbinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,6 +58,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newMapToolStripMenuItem,
+            this.saveToolStripMenuItem,
             this.closeToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -104,6 +109,35 @@
             this.mapEditorToolStripMenuItem.Text = "&Map Editor";
             this.mapEditorToolStripMenuItem.Click += new System.EventHandler(this.mapEditorToolStripMenuItem_Click);
             // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.imageToolStripMenuItem,
+            this.projectxmlToolStripMenuItem,
+            this.projectbinaryToolStripMenuItem});
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Text = "&Save";
+            // 
+            // imageToolStripMenuItem
+            // 
+            this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
+            this.imageToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.imageToolStripMenuItem.Text = "&Image";
+            this.imageToolStripMenuItem.Click += new System.EventHandler(this.imageToolStripMenuItem_Click);
+            // 
+            // projectxmlToolStripMenuItem
+            // 
+            this.projectxmlToolStripMenuItem.Name = "projectxmlToolStripMenuItem";
+            this.projectxmlToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.projectxmlToolStripMenuItem.Text = "Project (&xml)";
+            // 
+            // projectbinaryToolStripMenuItem
+            // 
+            this.projectbinaryToolStripMenuItem.Name = "projectbinaryToolStripMenuItem";
+            this.projectbinaryToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.projectbinaryToolStripMenuItem.Text = "Project (&binary)";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -133,6 +167,10 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mapEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tilesetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem projectxmlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem projectbinaryToolStripMenuItem;
     }
 }
 
